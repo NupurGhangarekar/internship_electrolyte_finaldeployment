@@ -4,7 +4,7 @@ import { Award, CalendarDays, ClipboardList, FileText, FolderKanban, LayoutDashb
 import { useAuth } from "../context/AuthContext";
 import NotificationPanel from "../components/NotificationPanel";
 
-const icons = { Dashboard: LayoutDashboard, Projects: FolderKanban, "My Tasks": ClipboardList, Calendar: CalendarDays, Documents: FileText, Profile: User };
+const icons = { Dashboard: LayoutDashboard, Projects: FolderKanban, Board: FolderKanban, "My Tasks": ClipboardList, Calendar: CalendarDays, Documents: FileText, Profile: User };
 
 export default function InternLayout() {
   const { user, logout } = useAuth();
