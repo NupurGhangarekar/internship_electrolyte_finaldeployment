@@ -15,7 +15,7 @@ export default function Login() {
     try {
       const user = await login(form);
       toast.success("Welcome back");
-      navigate(user.role === "admin" ? "/admin" : "/intern");
+      navigate(user.role === "admin" ? "/admin" : user.mustChangePassword ? "/intern/profile" : "/intern");
     } catch (error) {
       toast.error(error.message || "Login failed");
     } finally {

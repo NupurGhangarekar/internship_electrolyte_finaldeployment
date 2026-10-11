@@ -14,6 +14,7 @@ const projectRoutes = require("./routes/project.routes");
 const notificationRoutes = require("./routes/notification.routes");
 const calendarRoutes = require("./routes/calendar.routes");
 const commentRoutes = require("./routes/comment.routes");
+const onboardingRoutes = require("./routes/onboarding.routes");
 const { notFound, errorHandler } = require("./middleware/error.middleware");
 const { validateEnv } = require("./config/env");
 
@@ -38,6 +39,7 @@ app.use("/documents", documentRoutes);
 app.use("/comments", commentRoutes);
 app.use("/notifications", notificationRoutes);
 app.use("/calendar", calendarRoutes);
+app.use("/onboarding", onboardingRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

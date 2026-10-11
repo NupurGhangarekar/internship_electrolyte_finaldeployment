@@ -9,6 +9,11 @@ const userSchema = new mongoose.Schema(
     role: { type: String, enum: ["admin", "intern"], default: "intern" },
     department: { type: String, trim: true },
     joiningDate: { type: Date },
+    internshipDuration: { type: String, trim: true },
+    mentorName: { type: String, trim: true },
+    collegeName: { type: String, trim: true },
+    branchName: { type: String, trim: true },
+    mustChangePassword: { type: Boolean, default: false },
     profileImage: { type: String }
   },
   { timestamps: true }

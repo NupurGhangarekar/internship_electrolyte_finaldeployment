@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { Award, CalendarDays, ClipboardList, FileText, FolderKanban, LayoutDashboard, LogOut, Moon, Sun, User, Users } from "lucide-react";
+import { Award, CalendarDays, ClipboardList, FileText, FolderKanban, LayoutDashboard, LogOut, Moon, Sun, User, Users, UserPlus } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import NotificationPanel from "../components/NotificationPanel";
 
-const icons = { Dashboard: LayoutDashboard, Interns: Users, Projects: FolderKanban, Tasks: ClipboardList, Board: FolderKanban, Calendar: CalendarDays, Documents: FileText, Profile: User };
+const icons = { Dashboard: LayoutDashboard, Onboarding: UserPlus, Interns: Users, Projects: FolderKanban, Tasks: ClipboardList, Board: FolderKanban, Calendar: CalendarDays, Documents: FileText, Profile: User };
 
 export default function AdminLayout() {
   const { user, logout } = useAuth();
@@ -12,6 +12,7 @@ export default function AdminLayout() {
   const [dark, setDark] = useState(document.documentElement.classList.contains("dark"));
   const nav = [
     ["Dashboard", "/admin"],
+    ["Onboarding", "/admin/onboarding"],
     ["Interns", "/admin/interns"],
     ["Projects", "/admin/projects"],
     ["Board", "/admin/board"],

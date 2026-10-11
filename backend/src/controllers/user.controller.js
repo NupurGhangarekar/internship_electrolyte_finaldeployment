@@ -74,12 +74,15 @@ const deleteUser = asyncHandler(async (req, res) => {
 });
 
 const updateMyProfile = asyncHandler(async (req, res) => {
-  const allowed = ["name", "department", "joiningDate", "profileImage"];
+  const allowed = ["name", "department", "joiningDate", "profileImage", "password"];
   allowed.forEach((field) => {
     if (req.body[field] !== undefined) req.user[field] = req.body[field];
   });
+  if (req.body.password) req.user.mustChangePassword = false;
   await req.user.save();
-  sendSuccess(res, req.user, "Profile updated");
+  const responseUser = req.user.toObject();
+  delete responseUser.password;
+  sendSuccess(res, responseUser, "Profile updated");
 });
 
 module.exports = { getUsers, getUserById, createUser, updateUser, deleteUser, updateMyProfile };

@@ -11,7 +11,8 @@ const publicUser = (user) => ({
   role: user.role,
   department: user.department,
   joiningDate: user.joiningDate,
-  profileImage: user.profileImage
+  profileImage: user.profileImage,
+  mustChangePassword: user.mustChangePassword
 });
 
 const login = asyncHandler(async (req, res) => {

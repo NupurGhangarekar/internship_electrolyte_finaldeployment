@@ -25,6 +25,10 @@ A production-minded full-stack portal for managing interns, onboarding tasks, in
 - Toast notifications, loading states, empty states, filters, sorting, responsive sidebar, dark mode
 - Global error handling, validation middleware, standardized API responses
 - Optional email notification hook when a task is assigned
+- Admin onboarding for individual interns and validated Excel/CSV bulk imports
+- Secure temporary credentials with mandatory first-login password change
+- Generated appointment, recommendation, and experience letters with email delivery tracking
+- Admin-managed calendar meetings, deadlines, project links, and intern notifications
 
 ## Folder Structure
 
@@ -68,6 +72,7 @@ UPLOAD_DIR=uploads
 EMAIL_ENABLED=false
 SMTP_HOST=
 SMTP_PORT=587
+SMTP_SECURE=false
 SMTP_USER=
 SMTP_PASS=
 SMTP_FROM=
@@ -173,6 +178,20 @@ Documents:
 - `GET /documents/:internId`
 - `DELETE /documents/:id`
 
+Onboarding and letters:
+
+- `POST /onboarding/preview` - validate an Excel/CSV import before creating accounts
+- `POST /onboarding/manual` - create an intern, project link, offer letter, and welcome email
+- `POST /onboarding/bulk` - create validated spreadsheet rows
+- `POST /onboarding/letters/:internId` - generate an offer, recommendation, or experience letter
+
+Calendar:
+
+- `GET /calendar/events`
+- `POST /calendar/events` (admin)
+- `PUT /calendar/events/:id` (admin)
+- `DELETE /calendar/events/:id` (admin)
+
 ## Storage Notes
 
 Uploaded files are saved under `backend/uploads`. The storage concerns are isolated in `backend/src/services/storage.service.js`, so a future S3 implementation can keep the controllers unchanged by exposing compatible upload and remove methods.
@@ -185,5 +204,5 @@ Uploaded files are saved under `backend/uploads`. The storage concerns are isola
 - Set `VITE_API_URL` to the deployed backend API URL.
 - Put the API behind HTTPS.
 - Consider adding refresh tokens or token revocation for stricter logout semantics.
-- Enable `EMAIL_ENABLED=true` and configure SMTP for task assignment emails.
+- Enable `EMAIL_ENABLED=true` and configure SMTP for task assignment and onboarding emails.
 - Replace local storage with S3 or similar for durable document storage.

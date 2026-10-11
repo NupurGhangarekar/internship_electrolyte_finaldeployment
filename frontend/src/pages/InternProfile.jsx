@@ -36,6 +36,9 @@ export default function InternProfile() {
     }
     try {
       await api.put("/users/me", { password: passwordForm.newPassword });
+      const next = { ...user, mustChangePassword: false };
+      localStorage.setItem("user", JSON.stringify(next));
+      setUser(next);
       toast.success("Password changed successfully");
       setPasswordForm({ newPassword: "", confirmPassword: "" });
     } catch (error) {

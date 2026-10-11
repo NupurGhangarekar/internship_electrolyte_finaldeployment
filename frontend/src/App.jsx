@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import AdminLayout from "./layouts/AdminLayout";
 import InternLayout from "./layouts/InternLayout";
@@ -17,11 +17,14 @@ import Projects from "./pages/Projects";
 import Calendar from "./pages/Calendar";
 import ProjectDetails from "./pages/ProjectDetails";
 import KanbanBoard from "./pages/KanbanBoard";
+import Onboarding from "./pages/Onboarding";
 
 function ProtectedRoute({ role, children }) {
   const { isAuthenticated, user } = useAuth();
+  const location = useLocation();
   if (!isAuthenticated) return <Navigate to="/login" replace />;
   if (role && user?.role !== role) return <Navigate to={user?.role === "admin" ? "/admin" : "/intern"} replace />;
+  if (user?.role === "intern" && user?.mustChangePassword && location.pathname !== "/intern/profile") return <Navigate to="/intern/profile" replace />;
   return children;
 }
 
@@ -32,6 +35,7 @@ export default function App() {
       <Route path="/login" element={user ? <Navigate to={user.role === "admin" ? "/admin" : "/intern"} /> : <Login />} />
       <Route path="/admin" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>}>
         <Route index element={<AdminDashboard />} />
+        <Route path="onboarding" element={<Onboarding />} />
         <Route path="interns" element={<Interns />} />
         <Route path="projects" element={<Projects mode="admin" />} />
         <Route path="projects/:id" element={<ProjectDetails mode="admin" />} />

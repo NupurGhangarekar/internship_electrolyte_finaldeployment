@@ -12,7 +12,7 @@ router.post(
   upload.single("file"),
   [
     body("intern").isMongoId().withMessage("Valid intern is required"),
-    body("type").isIn(["Certificate", "Letter of Recommendation", "Completion Certificate", "Other"]).withMessage("Invalid document type")
+    body("type").isIn(["Offer Letter", "Letter of Recommendation", "Letter of Experience", "Certificate", "Completion Certificate", "Other"]).withMessage("Invalid document type")
   ],
   validate,
   uploadDocument
