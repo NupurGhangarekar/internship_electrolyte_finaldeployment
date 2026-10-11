@@ -21,9 +21,20 @@ const { validateEnv } = require("./config/env");
 validateEnv();
 const app = express();
 const uploadDir = process.env.UPLOAD_DIR || "uploads";
+const configuredClientUrl = (process.env.CLIENT_URL || "").replace(/\/$/, "");
+const vercelDeploymentOrigin = /^https:\/\/internshipelectrolytefinaldeployment-[a-z0-9-]+\.vercel\.app$/i;
+
+const corsOptions = {
+  origin(origin, callback) {
+    // Permit the configured production frontend and this project's Vercel deployment URLs.
+    if (!origin || origin === configuredClientUrl || vercelDeploymentOrigin.test(origin)) return callback(null, true);
+    return callback(new Error("Origin is not allowed by CORS"));
+  },
+  credentials: true
+};
 
 app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+app.use(cors(corsOptions));
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
